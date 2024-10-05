@@ -1,0 +1,8 @@
+{
+	"BuildId": "27405482",
+	"Modules": 
+	{
+		"RPG_Playground": "UnrealEditor-RPG_Playground-Win64-DebugGame.dll",
+		"RPG_PlaygroundEditor": "UnrealEditor-RPG_PlaygroundEditor-Win64-DebugGame.dll"
+	}
+}

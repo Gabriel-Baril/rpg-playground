@@ -1,0 +1,9 @@
+{
+	"SourceFiles": [
+		"D:\\_DEV\\_PROJECTS\\unreal-projects\\RPG_Playground\\rpg-playground\\RPG_Playground\\Source\\RPG_PlaygroundEditor\\RPG_PlaygroundEditor.Build.cs",
+		"D:\\_DEV\\_PROJECTS\\unreal-projects\\RPG_Playground\\rpg-playground\\RPG_Playground\\Source\\RPG_Playground\\RPG_Playground.Build.cs",
+		"D:\\_DEV\\_PROJECTS\\unreal-projects\\RPG_Playground\\rpg-playground\\RPG_Playground\\Source\\RPG_Playground.Target.cs",
+		"D:\\_DEV\\_PROJECTS\\unreal-projects\\RPG_Playground\\rpg-playground\\RPG_Playground\\Source\\RPG_PlaygroundEditor.Target.cs"
+	],
+	"EngineVersion": "5.3.2"
+}
