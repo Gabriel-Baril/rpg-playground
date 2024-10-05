@@ -14,8 +14,8 @@ struct FQuestEvent
 	{
 		struct FItemPickedData
 		{
-			UItemDefAsset* ItemPicked = nullptr;
-			int Amount = 0;
+			UItemDefAsset* ItemPicked;
+			int Amount;
 		} ItemPickedData;
 	};
 };
