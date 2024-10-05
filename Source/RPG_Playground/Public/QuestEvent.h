@@ -14,7 +14,7 @@ struct FQuestEvent
 	{
 		struct FItemPickedData
 		{
-			UItemDefAsset* ItemPicked;
+			TObjectPtr<UItemDefAsset> ItemPicked;
 			int Amount;
 		} ItemPickedData;
 	};

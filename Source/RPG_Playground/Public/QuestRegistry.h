@@ -3,7 +3,8 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "QuestEvent.h"
-#include "C:\Program Files\Epic Games\UE_5.3\Engine\Source\Runtime\Engine\Classes\GameFramework\SaveGame.h"
+#include "GameFramework/SaveGame.h"
+#include "Containers/Array.h"
 #include "QuestRegistry.generated.h"
 
 class UQuestAsset;
@@ -15,8 +16,10 @@ class RPG_PLAYGROUND_API UQuestLog : public USaveGame
 	GENERATED_BODY()
 private:
 	UPROPERTY()
-	TMap<int, UQuestInstance*> InProgressQuests;
+	TMap<int, TObjectPtr<UQuestInstance>> InProgressQuests;
 
+	UPROPERTY()
+	TMap<int, bool> CompletedQuests; /*Later we could have a QuestCompletedData struct instead of bool*/
 public:
 
 	void OnQuestEvent(const FQuestEvent& event);

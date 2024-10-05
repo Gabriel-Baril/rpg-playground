@@ -26,7 +26,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction")
-	UInteractableAsset* InteractableAsset;
+	TObjectPtr<UInteractableAsset> InteractableAsset;
 public:
 	FORCEINLINE class UInteractableAsset* GetInteractableAsset() const { return InteractableAsset; }
 };

@@ -12,8 +12,11 @@ class RPG_PLAYGROUND_API UQuestInstance : public UObject
 {
 	GENERATED_BODY()
 private:
-	UQuestAsset* QuestAsset;
-	TArray<UQuestObjectiveInstance*> QuestObjectiveInstances;
+	UPROPERTY()
+	TObjectPtr<UQuestAsset> QuestAsset;
+
+	UPROPERTY()
+	TArray<TObjectPtr<UQuestObjectiveInstance>> QuestObjectiveInstances;
 
 public:
 	void SetQuestAsset(UQuestAsset* InQuestAsset);

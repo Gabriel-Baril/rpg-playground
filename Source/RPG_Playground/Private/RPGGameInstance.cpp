@@ -2,10 +2,13 @@
 
 
 #include "RPGGameInstance.h"
+#include "Kismet/GameplayStatics.h"
+
+static constexpr int SAVE_SLOT_0 = 0;
+static constexpr const char* QUEST_LOG_SAVE_NAME = "QuestLogSave";
 
 URPGGameInstance::URPGGameInstance()
 {
-	QuestLog = NewObject<UQuestLog>();
 }
 
 URPGGameInstance::~URPGGameInstance()
@@ -15,13 +18,18 @@ URPGGameInstance::~URPGGameInstance()
 void URPGGameInstance::Init()
 {
 	Super::Init();
-
+	QuestLog = Cast<UQuestLog>(UGameplayStatics::LoadGameFromSlot(QUEST_LOG_SAVE_NAME, SAVE_SLOT_0));
+	if (!QuestLog)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("URPGGameInstance::Init: Save file already exists"));
+		QuestLog = Cast<UQuestLog>(UGameplayStatics::CreateSaveGameObject(UQuestLog::StaticClass()));
+	}
 }
 
 void URPGGameInstance::Shutdown()
 {
 	Super::Shutdown();
-
+	UGameplayStatics::SaveGameToSlot(QuestLog, QUEST_LOG_SAVE_NAME, SAVE_SLOT_0);
 }
 
 void URPGGameInstance::BeginQuest(UQuestAsset* QuestAsset)

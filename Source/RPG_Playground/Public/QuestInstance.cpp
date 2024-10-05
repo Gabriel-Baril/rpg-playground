@@ -17,6 +17,10 @@ void UQuestInstance::AddObjectiveInstance(UQuestObjectiveInstance* objectiveInst
 
 void UQuestInstance::OnQuestEvent(const FQuestEvent& event)
 {
+	UE_LOG(LogTemp, Warning, TEXT("Quest ID: %i"), QuestAsset->QuestID);
+	// UE_LOG(LogTemp, Warning, TEXT("Objective Num: %i"), QuestObjectiveInstances.Num());
+	QuestObjectiveInstances[0]->IsCompleted();
+
 	for (auto& objectiveInstance : QuestObjectiveInstances)
 	{
 		objectiveInstance->OnQuestEvent(event);

@@ -14,7 +14,7 @@ class RPG_PLAYGROUND_API UQuestObjectiveItemAsset : public UQuestObjectiveAsset
 	GENERATED_BODY()
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Quest")
-	UItemDefAsset* ItemToCollect;
+	TObjectPtr<UItemDefAsset> ItemToCollect;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Quest")
 	int ItemAmount;

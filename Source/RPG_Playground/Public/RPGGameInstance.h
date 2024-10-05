@@ -15,7 +15,7 @@ class RPG_PLAYGROUND_API URPGGameInstance : public UGameInstance
 	GENERATED_BODY()
 private:
 	UPROPERTY()
-	UQuestLog* QuestLog;
+	TObjectPtr<UQuestLog> QuestLog;
 
 public:
 	URPGGameInstance();

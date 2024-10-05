@@ -16,7 +16,7 @@ public:
 	int QuestID;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Quest")
-	TArray<UQuestObjectiveAsset*> QuestObjectives;
+	TArray<TObjectPtr<UQuestObjectiveAsset>> QuestObjectives;
 
 	UQuestInstance* Instanciate();
 };

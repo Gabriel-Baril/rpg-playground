@@ -12,7 +12,7 @@ class RPG_PLAYGROUND_API UQuestObjectiveItemInstance : public UQuestObjectiveIns
 	GENERATED_BODY()
 private:
 	UPROPERTY()
-	UQuestObjectiveItemAsset* ItemObjectiveAsset;
+	TObjectPtr<UQuestObjectiveItemAsset> ItemObjectiveAsset;
 
 	UPROPERTY()
 	int CurrentItemCount = 0;
