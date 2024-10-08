@@ -21,7 +21,6 @@ void URPGGameInstance::Init()
 	QuestLog = Cast<UQuestLog>(UGameplayStatics::LoadGameFromSlot(QUEST_LOG_SAVE_NAME, SAVE_SLOT_0));
 	if (!QuestLog)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("URPGGameInstance::Init: Save file already exists"));
 		QuestLog = Cast<UQuestLog>(UGameplayStatics::CreateSaveGameObject(UQuestLog::StaticClass()));
 	}
 }
@@ -29,6 +28,10 @@ void URPGGameInstance::Init()
 void URPGGameInstance::Shutdown()
 {
 	Super::Shutdown();
+}
+
+void URPGGameInstance::Save()
+{
 	UGameplayStatics::SaveGameToSlot(QuestLog, QUEST_LOG_SAVE_NAME, SAVE_SLOT_0);
 }
 

@@ -14,7 +14,7 @@ class RPG_PLAYGROUND_API URPGGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
 private:
-	UPROPERTY()
+	UPROPERTY(SaveGame)
 	TObjectPtr<UQuestLog> QuestLog;
 
 public:
@@ -23,6 +23,9 @@ public:
 
 	virtual void Init() override;
 	virtual void Shutdown() override;
+
+	UFUNCTION(BlueprintCallable, Category = "Game Event")
+	void Save();
 
 	UFUNCTION(BlueprintCallable, Category = "Game Event")
 	void BeginQuest(UQuestAsset* QuestAsset);

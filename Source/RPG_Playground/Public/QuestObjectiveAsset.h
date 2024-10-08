@@ -14,4 +14,10 @@ public:
 	{
 		return nullptr;
 	}
+
+	void Serialize(FArchive& Ar) override
+	{
+		Super::Serialize(Ar);
+		// PolymorphicSerializeDispatch<UQuestObjectiveAsset>(Ar, GetClass(), this);
+	}
 };

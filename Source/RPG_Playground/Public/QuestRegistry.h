@@ -15,10 +15,10 @@ class RPG_PLAYGROUND_API UQuestLog : public USaveGame
 {
 	GENERATED_BODY()
 private:
-	UPROPERTY()
+	UPROPERTY(SaveGame)
 	TMap<int, TObjectPtr<UQuestInstance>> InProgressQuests;
 
-	UPROPERTY()
+	UPROPERTY(SaveGame)
 	TMap<int, bool> CompletedQuests; /*Later we could have a QuestCompletedData struct instead of bool*/
 public:
 

@@ -13,6 +13,9 @@ void UQuestLog::OnQuestEvent(const FQuestEvent& event)
 
 	for (auto& [key, questInstance] : InProgressQuests)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Quest Instance Address: %p"), static_cast<void*>(questInstance));
+		UE_LOG(LogTemp, Warning, TEXT("Quest Log Address: %p"), static_cast<void*>(this));
+		
 		questInstance->OnQuestEvent(event);
 		if (questInstance->IsCompleted())
 		{

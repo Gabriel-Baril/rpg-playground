@@ -17,9 +17,20 @@ void UQuestInstance::AddObjectiveInstance(UQuestObjectiveInstance* objectiveInst
 
 void UQuestInstance::OnQuestEvent(const FQuestEvent& event)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Quest ID: %i"), QuestAsset->QuestID);
-	// UE_LOG(LogTemp, Warning, TEXT("Objective Num: %i"), QuestObjectiveInstances.Num());
-	QuestObjectiveInstances[0]->IsCompleted();
+	// if (!IsValid(QuestAsset))
+	// {
+	// 	UE_LOG(LogTemp, Warning, TEXT("Invalid QuestAsset Object"));
+	// 	return;
+	// }
+
+	// const bool validQuestAsset = QuestAsset != nullptr;
+	// const bool validQuestObjectiveInstances = QuestObjectiveInstances.Num() > 0;
+	// 
+	// if (validQuestAsset && validQuestObjectiveInstances)
+	// {
+	// 	UE_LOG(LogTemp, Warning, TEXT("Invalid Quest Instance Object"));
+	// 	return;
+	// }
 
 	for (auto& objectiveInstance : QuestObjectiveInstances)
 	{

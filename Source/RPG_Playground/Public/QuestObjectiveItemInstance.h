@@ -11,10 +11,10 @@ class RPG_PLAYGROUND_API UQuestObjectiveItemInstance : public UQuestObjectiveIns
 {
 	GENERATED_BODY()
 private:
-	UPROPERTY()
+	UPROPERTY(SaveGame)
 	TObjectPtr<UQuestObjectiveItemAsset> ItemObjectiveAsset;
 
-	UPROPERTY()
+	UPROPERTY(SaveGame)
 	int CurrentItemCount = 0;
 public:
 	void SetObjectiveAsset(UQuestObjectiveItemAsset* ObjectiveAsset);
