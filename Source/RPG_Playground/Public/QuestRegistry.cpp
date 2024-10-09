@@ -2,8 +2,9 @@
 #include "QuestAsset.h"
 #include "QuestInstance.h"
 
-void UQuestLog::OnQuestEvent(const FQuestEvent& event)
+void UQuestLog::OnQuestEvent(const FQuestEvent& event, UQuestProgressSave* QuestProgress)
 {
+	UE_LOG(LogTemp, Warning, TEXT("InProgressQuests: %i"), InProgressQuests.Num());
 	if (InProgressQuests.IsEmpty())
 	{
 		return;
@@ -26,24 +27,55 @@ void UQuestLog::OnQuestEvent(const FQuestEvent& event)
 	for (const auto& QuestCompletedID : QuestsFlaggedAsCompleted)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Quest Completed: %i"), QuestCompletedID);
+		QuestProgress->CompleteQuest(QuestCompletedID);
 		InProgressQuests.Remove(QuestCompletedID);
-		CompletedQuests.Add(QuestCompletedID, true);
 	}
 }
 
-void UQuestLog::BeginQuest(UQuestAsset* Quest)
+
+void UQuestLog::Instanciate(int QID, const FQuestProgressData* QuestData)
+{
+	UQuestInstance* instance = QuestData->QuestAsset->Instanciate(QuestData);
+	InProgressQuests.Add(QID, instance);
+}
+
+void UQuestLog::BeginQuest(UQuestAsset* Quest, UQuestProgressSave* QuestProgress)
 {
 	int QID = Quest->QuestID;
-	if (CompletedQuests.Contains(QID))
+	if (QuestProgress->IsQuestCompleted(QID))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Quest '%i' is already completed!"), QID);
 		return;
 	}
-	if (InProgressQuests.Contains(QID))
+	if (QuestProgress->IsQuestInProgress(QID))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Cannot start a quest currently in progress!"));
 		return;
 	}
-	UQuestInstance* instance = Quest->Instanciate();
+	UQuestInstance* instance = Quest->Instanciate(nullptr);
 	InProgressQuests.Add(QID, instance);
+}
+
+void UQuestLog::Init(UQuestProgressSave* QuestProgress)
+{
+	UE_LOG(LogTemp, Warning, TEXT("UQuestLog::Init"));
+	for (const auto& InProgressQuest : QuestProgress->GetInProgressQuests())
+	{
+		Instanciate(InProgressQuest.Key, &InProgressQuest.Value);
+	}
+}
+
+void UQuestLog::Save(UQuestProgressSave* QuestProgress)
+{
+	for (auto& [QID, QuestInstance] : InProgressQuests)
+	{
+		FQuestProgressData data;
+		data.QuestAsset = QuestInstance->GetQuestAsset();
+		TArray<uint8> ByteArray;
+		FMemoryWriter writer(ByteArray, true);
+		QuestInstance->Save(writer);
+		data.SerializedData = ByteArray;
+
+		QuestProgress->SaveQuest(QID, data);
+	}
 }

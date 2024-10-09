@@ -14,7 +14,7 @@ class RPG_PLAYGROUND_API URPGGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
 private:
-	UPROPERTY(SaveGame)
+	TObjectPtr<UQuestProgressSave> QuestProgressSave;
 	TObjectPtr<UQuestLog> QuestLog;
 
 public:

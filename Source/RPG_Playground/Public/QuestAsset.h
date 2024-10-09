@@ -6,6 +6,7 @@
 #include "QuestAsset.generated.h"
 
 class UQuestInstance;
+struct FQuestProgressData;
 
 UCLASS(BlueprintType)
 class RPG_PLAYGROUND_API UQuestAsset : public UObject
@@ -18,5 +19,5 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Quest")
 	TArray<TObjectPtr<UQuestObjectiveAsset>> QuestObjectives;
 
-	UQuestInstance* Instanciate();
+	UQuestInstance* Instanciate(const FQuestProgressData* QuestData);
 };

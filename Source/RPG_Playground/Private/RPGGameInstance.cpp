@@ -5,7 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 
 static constexpr int SAVE_SLOT_0 = 0;
-static constexpr const char* QUEST_LOG_SAVE_NAME = "QuestLogSave";
+static constexpr const char* QUEST_PROGRESS_SAVE_NAME = "QuestProgressSave";
 
 URPGGameInstance::URPGGameInstance()
 {
@@ -18,10 +18,15 @@ URPGGameInstance::~URPGGameInstance()
 void URPGGameInstance::Init()
 {
 	Super::Init();
-	QuestLog = Cast<UQuestLog>(UGameplayStatics::LoadGameFromSlot(QUEST_LOG_SAVE_NAME, SAVE_SLOT_0));
-	if (!QuestLog)
+	QuestLog = NewObject<UQuestLog>(this);
+	QuestProgressSave = Cast<UQuestProgressSave>(UGameplayStatics::LoadGameFromSlot(QUEST_PROGRESS_SAVE_NAME, SAVE_SLOT_0));
+	if (!QuestProgressSave)
 	{
-		QuestLog = Cast<UQuestLog>(UGameplayStatics::CreateSaveGameObject(UQuestLog::StaticClass()));
+		QuestProgressSave = Cast<UQuestProgressSave>(UGameplayStatics::CreateSaveGameObject(UQuestProgressSave::StaticClass()));
+	}
+	else
+	{
+		QuestLog->Init(QuestProgressSave);
 	}
 }
 
@@ -32,12 +37,15 @@ void URPGGameInstance::Shutdown()
 
 void URPGGameInstance::Save()
 {
-	UGameplayStatics::SaveGameToSlot(QuestLog, QUEST_LOG_SAVE_NAME, SAVE_SLOT_0);
+	// Serialize data back into QuestProgressSave
+	QuestLog->Save(QuestProgressSave);
+	UE_LOG(LogTemp, Warning, TEXT("URPGGameInstance::Save"));
+	UGameplayStatics::SaveGameToSlot(QuestProgressSave, QUEST_PROGRESS_SAVE_NAME, SAVE_SLOT_0);
 }
 
 void URPGGameInstance::BeginQuest(UQuestAsset* QuestAsset)
 {
-	QuestLog->BeginQuest(QuestAsset);
+	QuestLog->BeginQuest(QuestAsset, QuestProgressSave);
 }
 
 void URPGGameInstance::OnItemPickedEvent(UItemDefAsset* ItemDef, int Amount)
@@ -49,5 +57,5 @@ void URPGGameInstance::OnItemPickedEvent(UItemDefAsset* ItemDef, int Amount)
 	event.ItemPickedData.ItemPicked = ItemDef;
 	event.ItemPickedData.Amount = Amount;
 
-	QuestLog->OnQuestEvent(event);
+	QuestLog->OnQuestEvent(event, QuestProgressSave);
 }

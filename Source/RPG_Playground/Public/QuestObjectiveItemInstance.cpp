@@ -25,3 +25,13 @@ bool UQuestObjectiveItemInstance::IsCompleted()
 {
 	return CurrentItemCount >= ItemObjectiveAsset->ItemAmount;
 }
+
+void UQuestObjectiveItemInstance::Save(FMemoryWriter& writer)
+{
+	writer << CurrentItemCount;
+}
+
+void UQuestObjectiveItemInstance::Load(FMemoryReader& reader)
+{
+	reader << CurrentItemCount;
+}

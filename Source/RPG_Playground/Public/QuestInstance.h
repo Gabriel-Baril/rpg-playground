@@ -13,7 +13,6 @@ class RPG_PLAYGROUND_API UQuestInstance : public UObject
 {
 	GENERATED_BODY()
 private:
-	UPROPERTY(SaveGame)
 	TObjectPtr<UQuestAsset> QuestAsset = nullptr;
 	TArray<TObjectPtr<UQuestObjectiveInstance>> QuestObjectiveInstances;
 
@@ -23,6 +22,22 @@ public:
 	void AddObjectiveInstance(UQuestObjectiveInstance* objectiveInstance);
 	void OnQuestEvent(const FQuestEvent& event);
 	bool IsCompleted();
+
+	void Save(FMemoryWriter& writer)
+	{
+		for (UQuestObjectiveInstance* Objective : QuestObjectiveInstances)
+		{
+			Objective->Save(writer);
+		}
+	}
+
+	void Load(FMemoryReader& reader)
+	{
+		for (UQuestObjectiveInstance* Objective : QuestObjectiveInstances)
+		{
+			Objective->Load(reader);
+		}
+	}
 
 	void Serialize(FArchive& Ar) override
 	{

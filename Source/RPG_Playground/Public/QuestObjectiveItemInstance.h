@@ -11,13 +11,16 @@ class RPG_PLAYGROUND_API UQuestObjectiveItemInstance : public UQuestObjectiveIns
 {
 	GENERATED_BODY()
 private:
-	UPROPERTY(SaveGame)
+	// Back Reference
 	TObjectPtr<UQuestObjectiveItemAsset> ItemObjectiveAsset;
 
-	UPROPERTY(SaveGame)
+	// State
 	int CurrentItemCount = 0;
 public:
 	void SetObjectiveAsset(UQuestObjectiveItemAsset* ObjectiveAsset);
 	virtual void OnQuestEvent(const FQuestEvent& event) override;
 	virtual bool IsCompleted() override;
+
+	virtual void Save(FMemoryWriter& writer) override;
+	virtual void Load(FMemoryReader& reader) override;
 };

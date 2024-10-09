@@ -14,7 +14,17 @@ public:
 	virtual void OnQuestEvent(const FQuestEvent& event) { }
 	virtual bool IsCompleted() { return true; }
 
-	void Serialize(FArchive& Ar) override
+	virtual void Save(FMemoryWriter& writer)
+	{
+		// Abstract
+	}
+
+	virtual void Load(FMemoryReader& writer)
+	{
+		// Abstract
+	}
+
+	virtual void Serialize(FArchive& Ar) override
 	{
 		Super::Serialize(Ar);
 		PolymorphicSerializeDispatch<UQuestObjectiveInstance>(Ar, GetClass(), this);
